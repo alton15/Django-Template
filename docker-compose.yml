@@ -1,0 +1,55 @@
+version: '3.9'
+services:
+  template-server-1:
+    image: django-template:1.0
+    container_name: django-template-1
+    volumes:
+      - ./Django-Server-Template:/app/server
+    mem_limit: "1g"
+    ports:
+      - 5050:5050
+    command: ./bin/run_docker_compose.sh
+    sysctls:
+      - net.core.somaxconn=1024
+    networks:
+      - template-net
+  celery-worker:
+    image: django-template:1.0
+    container_name: celery-worker
+    volumes:
+      - ./Django-Server-Template:/app/server
+    mem_limit: "1g"
+    ports:
+      - 5051:5050
+    command: celery -A server worker -l info
+    sysctls:
+      - net.core.somaxconn=1024
+    depends_on:
+      - redis-server
+    networks:
+      - template-net
+  celery-beat:
+    image: django-template:1.0
+    container_name: celery-beat
+    volumes:
+      - ./Django-Server-Template:/app/server
+    mem_limit: "1g"
+    ports:
+      - 5052:5050
+    command: celery -A server beat -l info
+    sysctls:
+      - net.core.somaxconn=1024
+    depends_on:
+      - redis-server
+    networks:
+      - template-net
+  redis-server:
+    image: redis:latest
+    command: redis-server
+    ports:
+      - 6379:6379
+    networks:
+      - template-net
+
+networks:
+  template-net:

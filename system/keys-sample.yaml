@@ -1,0 +1,11 @@
+# django secret_key
+secret_key: "Django-SecretKey - 보안 키 이므로 관리에 유의 필요!! (그래서 대치해두었습니다)"
+
+# django-cors-headers
+cors_exceptions:
+  - "http://localhost"
+cors_allow_headers:
+  # add custom cors_allow_headers (without default headers)
+  - "something"
+csrf_trusted_origins:
+  - "localhost"

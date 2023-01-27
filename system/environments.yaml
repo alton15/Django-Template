@@ -1,0 +1,25 @@
+# Server Info (with uWSGI)
+server:
+  name: "server"
+  version: "latest"
+  protocol: "http"
+  host: "0.0.0.0"
+  port: "5050"
+  processes: 2
+  harakiri: 30
+  maxrequests: 5000
+  maxlogs: 100000000
+
+settings:
+  allowed_hosts:
+    - "*"
+  language: "ko-kr"
+  timezone: "Asia/Seoul"
+  log_dir: "/common/logs"
+  # static & media settings
+  static_url: "/static/"
+  static_root: "/common/static/"  # Not Used yet
+  media_url: "/media/"
+  media_root: "/common/media/"  # Not Used yet
+
+# Write Other settings below (without Secret-Keys)
